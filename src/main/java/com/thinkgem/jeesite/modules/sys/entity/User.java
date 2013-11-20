@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -41,6 +42,8 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.common.utils.Collections3;
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
+import com.thinkgem.jeesite.modules.account.entity.Account;
+import com.thinkgem.jeesite.modules.account.entity.UserAccount;
 
 /**
  * 用户Entity
@@ -69,7 +72,9 @@ public class User extends DataEntity {
 	private Date loginDate;	// 最后登陆日期
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
-
+	private List<Account> accountList = Lists.newArrayList();
+	private List<UserAccount> userAccountList = Lists.newArrayList();
+	
 	public User() {
 		super();
 	}
@@ -247,6 +252,28 @@ public class User extends DataEntity {
 		this.roleList = roleList;
 	}
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(joinColumns = { @JoinColumn(name = "user_id")}, inverseJoinColumns = { @JoinColumn(name = "account_id")})
+	@OrderBy(value = "id")
+	@Fetch(FetchMode.SUBSELECT)
+	@NotFound(action = NotFoundAction.IGNORE)
+	public List<Account> getAccountList() {
+		return accountList;
+	}
+
+	public void setAccountList(List<Account> accountList) {
+		this.accountList = accountList;
+	}
+
+	@OneToMany(mappedBy = "user")
+	public List<UserAccount> getUserAccountList() {
+		return userAccountList;
+	}
+
+	public void setUserAccountList(List<UserAccount> userAccountList) {
+		this.userAccountList = userAccountList;
+	}
+	
 	@Transient
 	@JsonIgnore
 	public List<Long> getRoleIdList() {

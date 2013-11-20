@@ -27,5 +27,10 @@
 	
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.User" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000" />
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.User.roleList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	<cache name="com.thinkgem.jeesite.modules.sys.entity.User.accountList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	<cache name="com.thinkgem.jeesite.modules.sys.entity.User.userAccountList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	
+	<cache name="com.thinkgem.jeesite.modules.account.entity.Subject" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="10000" />
+	<cache name="com.thinkgem.jeesite.modules.account.entity.Subject.subjectList" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="10000" />
 	
 </ehcache>
