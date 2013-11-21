@@ -35,4 +35,9 @@ public class SubjectService extends BaseService {
 	public List<Subject> findAllSubjects(String...dcString) {
 		return AccountUtils.getSubjectList(dcString);
 	}
+	
+	@Transactional(readOnly = false)
+	public void deleteById(Long id) {
+		subjectDao.deleteById(id, "%," + id + ",%");
+	}
 }

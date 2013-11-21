@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.account.entity.Subject;
 import com.thinkgem.jeesite.modules.account.service.SubjectService;
@@ -61,5 +63,26 @@ public class SubjectController extends BaseController {
 		}
 		model.addAttribute("type", type);
 		return "modules/account/subjectForm";
+	}
+	
+	@RequestMapping(value = "form")
+	public String form(Subject subject, Model model) {
+		if (subject.getParent() == null || subject.getParent().getId() == null){
+			subject.setParent(new Subject(1L));
+		}
+		subject.setParent(subjectService.getSubject(subject.getParent().getId()));
+		model.addAttribute("subject", subject);
+		return "modules/account/subjectForm";
+	}
+	
+	@RequestMapping(value = "delete")
+	public String delete(Long id, RedirectAttributes redirectAttributes) {
+		if (Subject.isRoot(id)) {
+			addMessage(redirectAttributes, "删除失败, 不允许删除顶级科目或编号为空");
+		} else {
+			subjectService.deleteById(id);
+			addMessage(redirectAttributes, "删除成功");
+		}
+		return "redirect:"+Global.getAdminPath()+"/account/subject/";
 	}
 }

@@ -52,6 +52,7 @@ public class Subject extends DataEntity {
 	private String type;
 	private String parentIds;
 	private String level;
+	private String code;
 	
 	public static final String LEVEL0 = "0";
 	public static final String LEVEL1 = "1";
@@ -132,6 +133,15 @@ public class Subject extends DataEntity {
 
 	public void setLevel(String level) {
 		this.level = level;
+	}
+	
+	@Length(min=1, max=255)
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	@Transient

@@ -5,6 +5,8 @@
  */
 package com.thinkgem.jeesite.modules.account.dao;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +21,10 @@ import com.thinkgem.jeesite.modules.account.entity.Subject;
  * @version 2013-11-14
  */
 public interface SubjectDao extends SubjectDaoCustom, CrudRepository<Subject, Long> {
-
+	
+	@Modifying
+	@Query("update Subject set delFlag='" + Subject.DEL_FLAG_DELETE + "' where id = ?1 or parentIds like ?2")
+	public int deleteById(Long id, String parentIds);
 }
 
 
